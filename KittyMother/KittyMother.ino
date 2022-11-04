@@ -31,6 +31,7 @@ static void StopToVibrate() {
 
 
 static void FlashingColor(uint8_t r,uint8_t g,uint8_t b){
+  static uint32_t last_display_time = 0
   for (int i = 0; i < LED_COUNT; i++)
   {
     leds.setPixelColor(i, r, g, b);
@@ -42,11 +43,14 @@ static void FlashingColor(uint8_t r,uint8_t g,uint8_t b){
   leds.show();
 }
 
+
 static void WaterLamp() {
-  for (int i = 0; i < LED_COUNT; i++)
-  {
-    rainbow(i);
-    delay(50);  // Delay between rainbow slides
+  static uint32_t last_display_time = 0;
+  static uint8_t  current_led = 0;
+  if (millis() - last_display_time > 50) {  // 50 ms delay between frames
+    last_display_time = millis();
+    rainbow(current_led);
+    current_led = (current_led + 1) % LED_COUNT;
   }
 }
 
@@ -153,6 +157,7 @@ void loop()
   } else {
     getRSSI();
   }
+
   if (abs(rssi_int) > 0 && abs(rssi_int) <= 60) { //Close
     StopToVibrate();
     WaterLamp();
