@@ -146,6 +146,7 @@ void setup()
 
 uint32_t nowtime = 0;
 uint32_t lasttime = 0;
+uint32_t vibetime = 0;
 void loop()
 {
   if (abs(rssi_int) != 0) {
@@ -159,11 +160,15 @@ void loop()
   }
 
   if (abs(rssi_int) > 0 && abs(rssi_int) <= 60) { //Close
-    StopToVibrate();
-    WaterLamp();
-  } else if (abs(rssi_int) > 60) {//More than two meters, shaking, mom red flashes quickly
+//    StopToVibrate();
+//    WaterLamp();
     StartToVibrate();
     FlashingColor(255,0,0);
+  } else if (abs(rssi_int) > 60) {//More than two meters, shaking, mom red flashes quickly
+//    StartToVibrate();
+//    FlashingColor(255,0,0);
+    StopToVibrate();
+    WaterLamp();
   } else if (abs(rssi_int) == 0) { //Not connected yet or disconnected
   }
 

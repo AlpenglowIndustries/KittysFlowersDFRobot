@@ -163,12 +163,16 @@ void loop()
     getRSSI();
   }
   if (abs(rssi_int) > 0 && abs(rssi_int) <= 60) { //closs
+//    StopToVibrate();
+//    WaterLamp();
+    StartToVibrate();
+    FlashingColor(255,0,0);
+  } else if (abs(rssi_int) > 60) { //More than two meters, vibration, child lights off
+//    StartToVibrate();
+//    clearLEDs();
+//    leds.show();
     StopToVibrate();
     WaterLamp();
-  } else if (abs(rssi_int) > 60) { //More than two meters, vibration, child lights off
-    StartToVibrate();
-    clearLEDs();
-    leds.show();
   } else if (abs(rssi_int) == 0) { //Not connected yet or disconnected
   }
 }
